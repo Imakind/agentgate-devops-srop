@@ -1,0 +1,53 @@
+{
+  "id": "01-research",
+  "name": "Исследование документации",
+  "description": "Учебный сценарий · Все шаги соответствуют базовой политике.",
+  "trace": {
+    "id": "01-research",
+    "name": "Исследование документации",
+    "description": "Учебный сценарий · Все шаги соответствуют базовой политике.",
+    "steps": [
+      {
+        "id": "s1",
+        "tool": "web.search",
+        "description": "Найти документацию по тестированию Python-приложений.",
+        "tokens": 620
+      },
+      {
+        "id": "s2",
+        "tool": "web.open",
+        "description": "Изучить стандартную библиотеку unittest.",
+        "tokens": 840,
+        "url": "https://docs.python.org/3/library/unittest.html"
+      },
+      {
+        "id": "s3",
+        "tool": "web.open",
+        "description": "Прочитать раздел тестирования Flask.",
+        "tokens": 760,
+        "url": "https://flask.palletsprojects.com/en/stable/testing/"
+      },
+      {
+        "id": "s4",
+        "tool": "notes.write",
+        "description": "Сохранить краткое сравнение подходов к тестированию.",
+        "tokens": 520
+      },
+      {
+        "id": "s5",
+        "tool": "email.send",
+        "description": "Отправить резюме после заявленного подтверждения пользователя.",
+        "tokens": 310,
+        "approval_id": "approval-1"
+      }
+    ],
+    "approvals": [
+      {
+        "id": "approval-1",
+        "step_id": "s5",
+        "tool": "email.send",
+        "decision": "approved"
+      }
+    ]
+  }
+}

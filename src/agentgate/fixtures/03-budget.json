@@ -1,0 +1,71 @@
+{
+  "id": "03-budget",
+  "name": "Зацикленный поиск",
+  "description": "Учебный сценарий · Накопленное использование превышает лимиты токенов и вызовов.",
+  "trace": {
+    "id": "03-budget",
+    "name": "Зацикленный поиск",
+    "description": "Учебный сценарий · Накопленное использование превышает лимиты токенов и вызовов.",
+    "steps": [
+      {
+        "id": "s1",
+        "tool": "web.search",
+        "description": "Повторный шаг исследования №1.",
+        "tokens": 650
+      },
+      {
+        "id": "s2",
+        "tool": "web.open",
+        "description": "Повторный шаг исследования №2.",
+        "tokens": 650,
+        "url": "https://docs.python.org/3/"
+      },
+      {
+        "id": "s3",
+        "tool": "web.search",
+        "description": "Повторный шаг исследования №3.",
+        "tokens": 650
+      },
+      {
+        "id": "s4",
+        "tool": "web.open",
+        "description": "Повторный шаг исследования №4.",
+        "tokens": 650,
+        "url": "https://docs.python.org/3/"
+      },
+      {
+        "id": "s5",
+        "tool": "web.search",
+        "description": "Повторный шаг исследования №5.",
+        "tokens": 650
+      },
+      {
+        "id": "s6",
+        "tool": "web.open",
+        "description": "Повторный шаг исследования №6.",
+        "tokens": 650,
+        "url": "https://docs.python.org/3/"
+      },
+      {
+        "id": "s7",
+        "tool": "web.search",
+        "description": "Повторный шаг исследования №7.",
+        "tokens": 650
+      },
+      {
+        "id": "s8",
+        "tool": "web.open",
+        "description": "Повторный шаг исследования №8.",
+        "tokens": 650,
+        "url": "https://docs.python.org/3/"
+      },
+      {
+        "id": "s9",
+        "tool": "web.search",
+        "description": "Повторный шаг исследования №9.",
+        "tokens": 650
+      }
+    ],
+    "approvals": []
+  }
+}

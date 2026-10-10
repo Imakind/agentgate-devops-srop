@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentgate"
+version = "1.0.0"
+description = "Deterministic policy evaluation of supplied AI-agent traces, with a local dashboard and CI-ready CLI"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "Imakind"}]
+dependencies = ["Flask==3.1.2"]
+
+[project.scripts]
+agentgate = "agentgate.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+agentgate = ["static/*", "fixtures/*.json"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --import-mode=importlib"
+testpaths = ["tests"]
