@@ -169,3 +169,29 @@ def test_xml_unsafe_input_rejected(trace, bad):
 def test_input_object_type_rejected():
     with pytest.raises(ValidationError):
         evaluate([])
+
+
+@pytest.mark.parametrize("host", ["faß.de", "ｇithub.com", "fa\u200css.de"],
+                         ids=["sharp-s-mapping", "fullwidth-mapping", "joiner-removal"])
+def test_lossy_unicode_domain_mapping_is_rejected(host):
+    with pytest.raises(ValidationError):
+        canonical_domain(host)
+
+
+def test_unicode_domain_cannot_borrow_ascii_allowlist_entry(trace, policy):
+    policy["allowed_domains"] = ["fass.de", "flask.palletsprojects.com"]
+    trace["steps"][1]["url"] = "https://faß.de/"
+    report = evaluate(trace, policy)
+    assert codes(report) == {"domains"}
+    assert "Punycode" in report["violations"][0]["message"]
+
+
+def test_explicit_punycode_hostname_is_matched_exactly(trace, policy):
+    policy["allowed_domains"] = ["xn--fa-hia.de", "flask.palletsprojects.com"]
+    trace["steps"][1]["url"] = "https://xn--fa-hia.de/"
+    assert evaluate(trace, policy)["status"] == "passed"
+
+
+def test_userinfo_is_rejected_even_on_an_allowed_hostname(trace):
+    trace["steps"][1]["url"] = "https://untrusted@docs.python.org/3/"
+    assert codes(evaluate(trace)) == {"domains"}

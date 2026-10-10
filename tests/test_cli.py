@@ -64,3 +64,10 @@ def test_serve_rejects_invalid_port_before_starting(port):
     with pytest.raises(SystemExit) as caught:
         main(["serve", "--port", port])
     assert caught.value.code == 2
+
+
+
+def test_bundled_example_envelope_is_supported(tmp_path, capsys):
+    from agentgate.app import examples
+    assert main(["check", save(tmp_path, examples()[0])]) == 0
+    assert json.loads(capsys.readouterr().out)["summary"]["total_steps"] == 5

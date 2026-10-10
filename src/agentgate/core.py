@@ -97,9 +97,15 @@ def canonical_domain(value: str) -> str:
         raise ValidationError("Домен должен быть именем хоста без пробелов")
     if any(c in value for c in "/\\:@?#%"):
         raise ValidationError("Домен указывается без схемы, порта, пути и wildcard")
-    host = value.removesuffix(".").lower()
+    source_host = value.removesuffix(".").lower()
     try:
-        host = host.encode("idna").decode("ascii")
+        encoded = source_host.encode("idna")
+        host = encoded.decode("ascii")
+        # Python's built-in IDNA codec uses legacy mappings (e.g. ß -> ss).
+        # Fail closed rather than equating distinct modern hostnames. Stable
+        # Unicode names still work; ambiguous names require explicit Punycode.
+        if not source_host.isascii() and encoded.decode("idna") != source_host:
+            raise ValidationError("Неоднозначный Unicode-домен: используйте точное ASCII/Punycode-имя")
     except UnicodeError as exc:
         raise ValidationError("Некорректный IDNA-домен") from exc
     if len(host) > 253 or not all(re.fullmatch(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?", label)
